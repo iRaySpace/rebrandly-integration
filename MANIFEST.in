@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include rebrandly_integration *.css
+recursive-include rebrandly_integration *.csv
+recursive-include rebrandly_integration *.html
+recursive-include rebrandly_integration *.ico
+recursive-include rebrandly_integration *.js
+recursive-include rebrandly_integration *.json
+recursive-include rebrandly_integration *.md
+recursive-include rebrandly_integration *.png
+recursive-include rebrandly_integration *.py
+recursive-include rebrandly_integration *.svg
+recursive-include rebrandly_integration *.txt
+recursive-exclude rebrandly_integration *.pyc
