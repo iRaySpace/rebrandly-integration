@@ -2,7 +2,18 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Rebrandly Settings', {
+	init_buttons: function(frm) {
+		frm.add_custom_button(__('Create Link'), function() {
+			var fields = [
+				{'fieldname': 'domain', 'fieldtype': 'Link', 'label': 'Domain', 'options': 'Rebrandly Domain', 'reqd': 1},
+				{'fieldname': 'destination', 'fieldtype': 'Data', 'label': 'Destination', 'reqd': 1},
+			];
+
+			frappe.prompt(fields, (values) => create_new_link(values), 'Create Link', 'Submit');
+		});
+	},
 	refresh: function(frm) {
+		frm.trigger('init_buttons');
 		var icons = {
 			'active': '<i class="octicon octicon-issue-closed text-success"></i>'
 		};
@@ -39,3 +50,20 @@ frappe.ui.form.on('Rebrandly Settings', {
 
 	}
 });
+
+function create_new_link(values) {
+	frappe.call({
+		method: 'rebrandly_integration.api.create_link',
+		freeze: true,
+		freeze_msg: 'Creating Rebrandly Link',
+		args: {
+			'domain': values.domain,
+			'destination': values.destination
+		},
+		callback: function(r) {
+			if (r.message && r.message.success) {
+				frappe.msgprint('Successfully created Rebrandly Link. Save the document to reload the data.');
+			}
+		}
+	});
+};
