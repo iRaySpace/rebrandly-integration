@@ -22,3 +22,7 @@ def create_link(destination, domain=None):
 
     if r.status_code == requests.codes.ok:
         return {'success': True, 'link': r.json()}
+
+    frappe.log_error(r.text, 'Link creation of Rebrandly failed')
+
+    return {'success': False}
